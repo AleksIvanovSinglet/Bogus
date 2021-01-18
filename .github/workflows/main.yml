@@ -31,12 +31,12 @@ jobs:
         run: dotnet tool restore
 
       # (github.event_name == 'push') is used for steps specifically involved in the Release Sequence
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      - if: github.event_name == 'push'
         name: Bump release version and create release tag
         id: tag_generator
         uses: mathieudutour/github-tag-action@v5
         with:
-          github_token: ${{ secrets.REPO_ALL_TOKEN  }}
+          github_token: ${{ secrets.REPO_ALL_TOKEN }}
           default_bump: false
 
       - name: Build project
@@ -46,7 +46,7 @@ jobs:
         env:
           FORCE_VERSION: ${{ steps.tag_generator.outputs.new_version }}
 
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      - if: github.event_name == 'push'
         name: Upload package artifact
         id: up_package_artifacts
         uses: actions/upload-artifact@v2
@@ -59,7 +59,7 @@ jobs:
         shell: powershell
         run: dotnet fake run Source\Builder\build.fsx target test
 
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      - if: github.event_name == 'push'
         name: Upload package artifact
         id: up_test_results_artifacts
         uses: actions/upload-artifact@v2
@@ -69,7 +69,7 @@ jobs:
 
   cd:
     # "This job will execute when the workflow is triggered on a 'push event', the target branch is 'master' and the commit is intended to be a release."
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && needs.ci.outputs.new_version != ''
+    if: github.event_name == 'push' && needs.ci.outputs.new_version != ''
     needs: ci
     runs-on: windows-latest
     env:
