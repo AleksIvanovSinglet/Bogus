@@ -35,7 +35,7 @@ jobs:
         name: Bump release version and create release tag
         id: tag_generator
         uses: mathieudutour/github-tag-action@v5
-        with:
+        with: 
           github_token: ${{ secrets.REPO_ALL_TOKEN }}
           default_bump: false
 
