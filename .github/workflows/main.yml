@@ -13,7 +13,7 @@ jobs:
       new_version: ${{ steps.tag_generator.outputs.new_version }}
     steps:
       - name: Checkout repository
-        id: checkout_repo
+        id: checkout_repo 
         uses: actions/checkout@v2
         with:
           fetch-depth: 50
