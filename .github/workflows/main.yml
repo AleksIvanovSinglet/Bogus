@@ -34,7 +34,7 @@ jobs:
       - if: github.event_name == 'push'
         name: Bump release version and create release tag
         id: tag_generator
-        uses: mathieudutour/github-tag-action@v5
+        uses: mathieudutour/github-tag-action@v5.2
         with: 
           github_token: ${{ secrets.PUBLIC_REPO_TOKEN }}
           default_bump: false
